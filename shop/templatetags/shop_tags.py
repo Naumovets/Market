@@ -14,8 +14,3 @@ def show_pagination_numbers(page):
     else:
         numbers = [i for i in range(page.paginator.num_pages-4, page.paginator.num_pages+1)]
     return {'numbers': numbers, 'active': page.number}
-
-
-@register.simple_tag
-def show_count_product_in_cart(request):
-    return len(Cart(request))

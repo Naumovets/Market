@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="site-section">
+      <div class="container">
+        <form method="POST" class="row">
+
+          {% csrf_token %}
+          {% if form %}
+          <div class="col-md-6 mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Детали заказа</h2>
+            <div class="p-3 p-lg-5 border">
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">Имя <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_fname" name="first_name">
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Фамилия <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_lname" name="last_name">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_address" class="text-black">Адрес <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_address" name="address" placeholder="Улица Ленина..">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="city" class="text-black">Город <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="city" name="city">
+                </div>
+                <div class="col-md-6">
+                  <label for="c_postal_zip" class="text-black">Индекс <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_postal_zip" name="postal_code">
+                </div>
+              </div>
+
+              <div class="form-group row mb-5">
+                <div class="col">
+                  <label for="c_email_address" class="text-black">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="c_email_address" name="email">
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="c_order_notes" class="text-black">Замечание</label>
+                <textarea name="details" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+              </div>
+
+            </div>
+          </div>
+          {% endif %}
+          <div class="col-md-6">
+            
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Ваш заказ</h2>
+                <div class="p-3 p-lg-5 border">
+                  <table class="table site-block-order-table mb-5">
+                    <thead>
+                      <th>Товар</th>
+                      <th>Число</th>
+                      <th>Цена</th>
+                    </thead>
+                    <tbody>
+                    {% if order == None %}
+                    {% for item in cart %}
+                    {% with product=item.product %}
+                      <tr>
+                          <td><a href="{{ product.get_absolute_url }}">{{product|truncatewords:5}}</a></td>
+                          <td>{{item.quantity}}</td>
+                          <td>{{item.total_price}}</td>
+                      </tr>
+                    {% endwith %}
+                    {% endfor %}
+                    {% endif %}
+
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Итого</strong></td>
+                        <td class="text-black font-weight-bold"><strong>{{cart.get_total_price}}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Оплатить</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+        <!-- </form> -->
+      </div>
+    </div>
+{% endblock %}

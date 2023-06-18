@@ -25,7 +25,7 @@
                         <img src="{{product.image.url}}" alt="Image" class="img-fluid">
                       </td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">{{product.name|truncatewords:5}}</h2>
+                        <h2 class="h5 text-black"><a href="{{ product.get_absolute_url }}">{{product.name|truncatewords:5}}</a></h2>
                       </td>
                       <td>{{item.price}}</td>
                       <td>
@@ -104,11 +104,13 @@
                   </div>
                 </div>
 
+                {% if form %}
                 <div class="row">
                   <div class="col-md-12">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Оплатить</button>
+                    <a href="{% url 'orders:order_create' %}" class="btn btn-primary btn-lg py-3 btn-block">Оплатить</a>
                   </div>
                 </div>
+                {% endif %}
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@
               <li>
                 <a href="{% url 'cart:cart_detail' %}" class="site-cart">
                   <span class="icon icon-shopping_cart"></span>
-                  <span class="count">{% show_count_product_in_cart request %}</span>
+                  <span class="count">{{ cart|length }}</span>
                 </a>
               </li>
               <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
