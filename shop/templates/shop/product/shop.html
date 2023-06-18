@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+
+    <div class="site-section">
+      <div class="container">
+
+        <div class="row mb-5">
+          <div class="col-md-9 order-2">
+
+            <div class="row">
+              <div class="col-md-12 mb-5">
+                <div class="float-md-left mb-4">
+                  <h2 class="text-black h5">
+                    {% if category %}
+                    Товары категории «{{category}}»
+                    {% else %}
+                    Все товары
+                    {% endif %}
+                  </h2>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-5">
+
+              {% for product in products %}
+              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                <div class="block-4 text-center border">
+                  {% if product.image %}
+                  <figure class="block-4-image">
+                    <a href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" alt="Image placeholder" class="img-fluid img-product"></a>
+                  </figure>
+                  {% endif %}
+                  <div class="block-4-text p-4">
+                    <h3><a href="{{product.get_absolute_url}}">{{product.name|truncatewords:5}}</a></h3>
+                    <p class="mb-0">{{product.description|truncatewords:5}}</p>
+                    <p class="text-primary font-weight-bold">{{product.price}} руб.</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            {% include 'block/pagination.html' with page=products %}
+          </div>
+
+          <div class="col-md-3 order-1 mb-5 mb-md-0">
+            <div class="border p-4 rounded mb-4">
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Категории</h3>
+              <ul class="list-unstyled mb-0">
+                <li class="mb-1">
+                  <a href="{% url 'shop:product_list' %}" class="d-flex">
+                    Все товары
+                  </a>
+                </li>
+                {% for cat in categories %}
+                <li class="mb-1">
+                  <a href="{{cat.get_absolute_url}}" class="d-flex">
+                    <span>
+                      {{cat}}
+                    </span>
+
+                    <span class="text-black ml-auto">
+                      ({{cat.products.count}})
+                    </span>
+
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+<!--            <form method="GET" action="" class="border p-4 rounded mb-4">-->
+<!--              <div class="mb-4">-->
+<!--                <h3 class="mb-3 h6 text-uppercase text-black d-block">Фильтр цены</h3>-->
+<!--                <div id="slider-range" class="border-primary"></div>-->
+<!--                <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />-->
+<!--                <input type="number" name="low-price" id="low-price" hidden value="100">-->
+<!--                <input type="number" name="high-price" id="high-price" hidden value="50000">-->
+<!--              </div>-->
+
+<!--              <div class="mb-4">-->
+<!--                <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>-->
+<!--                <label for="s_sm" class="d-flex">-->
+<!--                  <input name="small" type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Маленький размер</span>-->
+<!--                </label>-->
+<!--                <label for="s_md" class="d-flex">-->
+<!--                  <input name="medium" type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Средний размер</span>-->
+<!--                </label>-->
+<!--                <label for="s_lg" class="d-flex">-->
+<!--                  <input name="large" type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Большой размер</span>-->
+<!--                </label>-->
+<!--              </div>-->
+
+<!--              <button class="btn btn-sm btn-primary" type="submit">Фильтровать</button>-->
+
+<!--              <div class="mb-4">-->
+<!--                <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>-->
+<!--                <a href="?color=red" class="d-flex color-item align-items-center" >-->
+<!--                  <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Red (2,429)</span>-->
+<!--                </a>-->
+<!--                <a href="?color=green" class="d-flex color-item align-items-center" >-->
+<!--                  <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Green (2,298)</span>-->
+<!--                </a>-->
+<!--                <a href="?color=blue" class="d-flex color-item align-items-center" >-->
+<!--                  <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Blue (1,075)</span>-->
+<!--                </a>-->
+<!--                <a href="?color=purple" class="d-flex color-item align-items-center" >-->
+<!--                  <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>-->
+<!--                </a>-->
+<!--              </div>-->
+
+            </form>
+          </div>
+        </div>
+
+
+
+<!-- Тут категории, которые пока что не очень важны  -->
+<!--        <div class="row">-->
+<!--          <div class="col-md-12">-->
+<!--            <div class="site-section site-blocks-2">-->
+<!--                <div class="row justify-content-center text-center mb-5">-->
+<!--                  <div class="col-md-7 site-section-heading pt-4">-->
+<!--                    <h2>Categories</h2>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">-->
+<!--                    <a class="block-2-item" href="#">-->
+<!--                      <figure class="image">-->
+<!--                        <img src="images/women.jpg" alt="" class="img-fluid">-->
+<!--                      </figure>-->
+<!--                      <div class="text">-->
+<!--                        <span class="text-uppercase">Collections</span>-->
+<!--                        <h3>Women</h3>-->
+<!--                      </div>-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">-->
+<!--                    <a class="block-2-item" href="#">-->
+<!--                      <figure class="image">-->
+<!--                        <img src="images/children.jpg" alt="" class="img-fluid">-->
+<!--                      </figure>-->
+<!--                      <div class="text">-->
+<!--                        <span class="text-uppercase">Collections</span>-->
+<!--                        <h3>Children</h3>-->
+<!--                      </div>-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">-->
+<!--                    <a class="block-2-item" href="#">-->
+<!--                      <figure class="image">-->
+<!--                        <img src="images/men.jpg" alt="" class="img-fluid">-->
+<!--                      </figure>-->
+<!--                      <div class="text">-->
+<!--                        <span class="text-uppercase">Collections</span>-->
+<!--                        <h3>Men</h3>-->
+<!--                      </div>-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              -->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+        
+      </div>
+    </div>
+
+{% endblock %}

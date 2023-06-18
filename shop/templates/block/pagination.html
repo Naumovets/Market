@@ -1,0 +1,19 @@
+{% load shop_tags %}
+
+<div class="row" data-aos="fade-up">
+    <div class="col-md-12 text-center">
+        <div class="site-block-27">
+            <ul>
+                {% if page.has_previous %}
+                <li><a href="?page={{ page.previous_page_number }}">&lt;</a></li>
+                {% endif %}
+
+                {% show_pagination_numbers page %}
+
+                {% if page.has_next %}
+                <li><a href="?page={{ page.next_page_number }}">&gt;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
